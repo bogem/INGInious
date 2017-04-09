@@ -42,11 +42,6 @@ if not on_rtd:
 else:
     install_requires += test_requires + ["Pygments>=2.0.2"]
 
-if sys.platform == 'win32':
-    install_requires += ["pbs>=0.110"]
-else:
-    install_requires += ["sh>=1.11"]
-
 # Setup
 setup(
     name="INGInious",
@@ -67,7 +62,6 @@ setup(
         'inginious-agent-docker',
         'inginious-agent-mcq',
         'inginious-backend',
-        'inginious-lti',
         'inginious-webapp',
         'inginious-install',
         'utils/check_task_description/inginious-check-task',
