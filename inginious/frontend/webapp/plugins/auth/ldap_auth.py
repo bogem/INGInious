@@ -70,7 +70,7 @@ class LdapAuthMethod(AuthMethod):
 
         if conn.authenticate(user_data.dn, password):
             try:
-                email = user_data[self._mail][0].decode('utf8')
+                email = user_data[self._cn][0].decode('utf8') + '@stud.fh-sm.de'
                 username = self._prefix + login
                 realname = user_data[self._cn][0].decode('utf8')
                 return (username, realname, email)
@@ -119,7 +119,7 @@ class LdapAuthMethod(AuthMethod):
                     continue
 
                 try:
-                    email = user_data[self._mail][0].decode('utf8')
+                    email = user_data[self._cn][0].decode('utf8') + '@stud.fh-sm.de'
                     realname = user_data[self._cn][0].decode('utf8')
                     retval[username] = (realname, email)
                 except KeyError as e:
