@@ -1,7 +1,6 @@
 /* Mixins */
 /* Fonts */
-@import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300);
-@import url(//fonts.googleapis.com/css?family=Source+Code+Pro);
+@import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300|Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700);
 /*Fixes for bootstrap*/
 .form-inline.form-control {
   display: inline-block;
