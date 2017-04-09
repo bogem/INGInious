@@ -188,8 +188,6 @@ class Client(BetterParanoidPirateClient):
                 if self._queue_update_last_attempt == 0 or self._queue_update_last_attempt > self._queue_update_last_attempt_max:
                     if self._queue_update_last_attempt:
                         self._logger.error("Asking for a job queue update despite previous update not yet received")
-                    else:
-                        self._logger.debug("Asking for a job queue update")
 
                     self._queue_update_last_attempt = 1
                     await self._simple_send(ClientGetQueue())
@@ -202,7 +200,6 @@ class Client(BetterParanoidPirateClient):
 
     async def _handle_job_queue_update(self, message: BackendGetQueue):
         """ Handles a BackendGetQueue containing a snapshot of the job queue """
-        self._logger.debug("Received job queue update")
         self._queue_update_last_attempt = 0
         self._queue_cache = message
 
