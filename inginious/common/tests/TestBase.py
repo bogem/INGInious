@@ -8,8 +8,8 @@ import tempfile
 import shutil
 import copy
 
-from inginious.common.base import directory_compare_from_hash, directory_content_with_hash, hash_file, id_checker, load_json_or_yaml, \
-    write_json_or_yaml
+from inginious.common.base import directory_compare_from_hash, directory_content_with_hash, hash_file, id_checker, load_yaml, \
+    write_yaml
 
 
 class TestIdChecker(object):
@@ -28,23 +28,14 @@ class TestIdChecker(object):
         assert id_checker("test/test") is False
 
 
-class TestJSONYAMLReaderWriter(object):
-    """ Test the functions load_json_or_yaml and write_json_or_yaml """
+class TestYAMLReaderWriter(object):
+    """ Test the functions load_yaml and write_yaml """
 
     def setUp(self):
         self.dir_path = tempfile.mkdtemp()
 
     def tearDown(self):
         shutil.rmtree(self.dir_path)
-
-    def test_json_read(self):
-        with open(os.path.join(self.dir_path, "input.json"), "w") as f:
-            f.write('{"key1":"data1","key2":{"key3":[1,2]}}')
-        assert load_json_or_yaml(os.path.join(self.dir_path, "input.json")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
-
-    def test_json_write(self):
-        write_json_or_yaml(os.path.join(self.dir_path, "output.json"), {'key1': 'data1', 'key2': {'key3': [1, 2]}})
-        assert load_json_or_yaml(os.path.join(self.dir_path, "output.json")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
 
     def test_yaml_read(self):
         with open(os.path.join(self.dir_path, "input.yaml"), "w") as f:
@@ -55,11 +46,11 @@ class TestJSONYAMLReaderWriter(object):
                     - 1
                     - 2
             """)
-        assert load_json_or_yaml(os.path.join(self.dir_path, "input.yaml")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
+        assert load_yaml(os.path.join(self.dir_path, "input.yaml")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
 
     def test_yaml_write(self):
-        write_json_or_yaml(os.path.join(self.dir_path, "output.yaml"), {'key1': 'data1', 'key2': {'key3': [1, 2]}})
-        assert load_json_or_yaml(os.path.join(self.dir_path, "output.yaml")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
+        write_yaml(os.path.join(self.dir_path, "output.yaml"), {'key1': 'data1', 'key2': {'key3': [1, 2]}})
+        assert load_yaml(os.path.join(self.dir_path, "output.yaml")) == {'key1': 'data1', 'key2': {'key3': [1, 2]}}
 
 
 class TestDirectoryHash(object):

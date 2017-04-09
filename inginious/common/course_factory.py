@@ -9,7 +9,7 @@ import shutil
 
 from inginious.common.log import get_course_logger
 from inginious.common.courses import Course
-from inginious.common.base import id_checker, load_json_or_yaml, write_json_or_yaml
+from inginious.common.base import id_checker, load_yaml, write_yaml
 from inginious.common.task_factory import TaskFactory
 from inginious.common.tasks import Task
 from inginious.common.hook_manager import HookManager
@@ -55,7 +55,7 @@ class CourseFactory(object):
         :raise InvalidNameException, CourseNotFoundException, CourseUnreadableException
         :return: the content of the dict that describes the course
         """
-        return load_json_or_yaml(self._get_course_descriptor_path(courseid))
+        return load_yaml(self._get_course_descriptor_path(courseid))
 
     def update_course_descriptor_content(self, courseid, content):
         """
@@ -64,7 +64,7 @@ class CourseFactory(object):
         :param content: the new dict that replaces the old content
         :raise InvalidNameException, CourseNotFoundException
         """
-        return write_json_or_yaml(self._get_course_descriptor_path(courseid), content)
+        return write_yaml(self._get_course_descriptor_path(courseid), content)
 
     def get_all_courses(self):
         """
@@ -113,7 +113,7 @@ class CourseFactory(object):
 
         base_file = os.path.join(course_directory, "course")
         if not os.path.isfile(base_file + ".yaml") and not os.path.isfile(base_file + ".json") :
-            write_json_or_yaml(os.path.join(course_directory, "course.yaml"), init_content)
+            write_yaml(os.path.join(course_directory, "course.yaml"), init_content)
         else:
             raise CourseAlreadyExistsException("Course with id " + courseid+ " already exists.")
 
@@ -162,7 +162,7 @@ class CourseFactory(object):
         """
         path_to_descriptor = self._get_course_descriptor_path(courseid)
         try:
-            course_descriptor = load_json_or_yaml(path_to_descriptor)
+            course_descriptor = load_yaml(path_to_descriptor)
         except Exception as e:
             raise CourseUnreadableException(str(e))
         self._cache[courseid] = (self._course_class(courseid, course_descriptor, self._task_factory, self._hook_manager), os.stat(path_to_descriptor).st_mtime)
