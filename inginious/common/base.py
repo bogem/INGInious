@@ -3,9 +3,7 @@
 # This file is part of INGInious. See the LICENSE and the COPYRIGHTS files for
 # more information about the licensing of this file.
 
-""" Basic dependencies for every modules that uses INGInious """
 import codecs
-import json
 import os.path
 import hashlib
 import re
@@ -18,22 +16,13 @@ def id_checker(id_to_test):
     return bool(re.match(r'[a-z0-9\-_]+$', id_to_test, re.IGNORECASE))
 
 
-def load_json_or_yaml(file_path):
-    """ Load JSON or YAML depending on the file extension. Returns a dict """
+def load_yaml(file_path):
     with open(file_path, "r") as f:
-        if os.path.splitext(file_path)[1] == ".json":
-            return json.load(f)
-        else:
-            return inginious.common.custom_yaml.load(f)
+        return inginious.common.custom_yaml.load(f)
 
 
-def write_json_or_yaml(file_path, content):
-    """ Load JSON or YAML depending on the file extension. """
-    if os.path.splitext(file_path)[1] == ".json":
-        o = json.dumps(content, sort_keys=False, indent=4, separators=(',', ': '))
-    else:
-        o = inginious.common.custom_yaml.dump(content)
-
+def write_yaml(file_path, content):
+    o = inginious.common.custom_yaml.dump(content)
     with codecs.open(file_path, "w", "utf-8") as f:
         f.write(o)
 
